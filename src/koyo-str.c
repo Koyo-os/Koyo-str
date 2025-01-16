@@ -82,3 +82,40 @@ float alike(const char *s1, const char *s2) {
     if (maxLen == 0) return 100.0;
     return (1.0 - (float)distance / maxLen) * 100.0;
 }
+
+void free_crush_result(char **result) {
+    for (int i = 0; result[i]; i++) {
+        free(result[i]); 
+    }
+    free(result);
+}
+
+char **crush(char step, char * text){
+        int count = 0;
+    char *temp = text;
+
+    while (*temp) {
+        if (*temp == step) {
+            count++;
+        }
+        temp++;
+    }
+    count++; 
+
+    char **result = (char **)malloc(count * sizeof(char *));
+    if (!result) {
+        return NULL;
+    }
+
+    int index = 0;
+    char *token = strtok(text, &step);
+    
+    while (token) {
+        result[index++] = strdup(token); 
+        token = strtok(NULL, &step);
+    }
+
+    result[index] = NULL;
+
+    return result; 
+}
