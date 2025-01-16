@@ -47,6 +47,18 @@ char * trim_left(int index, char * text){
     return new_text;
 }
 
+char * trim_right(int index, char * text){
+    size_t len = strlen(text);
+    char * new_text = calloc(len+1, sizeof(char));
+
+    int j = 0;
+    for (size_t i = 0; i < index; i++)
+    {
+        *(new_text + i) = *(text + i);   
+    }
+    return new_text;
+}
+
 int levenshtein_distance(const char *s1, const char *s2) {
     int len1 = strlen(s1);
     int len2 = strlen(s2);
@@ -118,4 +130,24 @@ char **crush(char step, char * text){
     result[index] = NULL;
 
     return result; 
+}
+
+void change(char old, char new_s, char * text){
+    for (size_t i = 0; i < strlen(text)-1; i++)
+    {
+        if (*text == old)
+        {
+            *text = new_s;
+        }
+    }
+}
+
+void delete_simbol(char simbol, char * text){
+    for (size_t i = 0; i < strlen(text)-1; i++)
+    {
+        if (*text == simbol)
+        {
+            *text = "";
+        }
+    }
 }
