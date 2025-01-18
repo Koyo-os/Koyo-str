@@ -142,12 +142,51 @@ void change(char old, char new_s, char * text){
     }
 }
 
+void change_more(char * old, char * new_str, char * text){
+    char *pos;
+    int old_len = strlen(old);
+    int new_len = strlen(new_str);
+    char *result;
+    int count = 0;
+
+    for (pos = text; (pos = strstr(pos, old)) != NULL; pos += old_len) {
+        count++;
+    }
+
+    result = (char *)malloc(strlen(text) + (new_len - old_len) * count + 1);
+    if (!result) {
+        printf("Ошибка выделения памяти\n");
+        return;
+    }
+
+    char *current_pos = result;
+    const char *last_pos = text;
+    while ((pos = strstr(last_pos, old)) != NULL) {
+        strncpy(current_pos, last_pos, pos - last_pos);
+        current_pos += pos - last_pos;
+
+        strcpy(current_pos, new_str);
+        current_pos += new_len;
+
+        last_pos = pos + old_len;
+    }
+
+    strcpy(current_pos, last_pos);
+    strcpy(text, result);
+
+    free(result);
+}
+
 void delete_simbol(char simbol, char * text){
     for (size_t i = 0; i < strlen(text)-1; i++)
     {
         if (*text == simbol)
         {
-            *text = "";
+            *text = *"";
         }
     }
+}
+
+void delete_substr(char *sub_str, char * text){
+    change_more(sub_str, "", text);
 }

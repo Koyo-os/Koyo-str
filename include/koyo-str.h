@@ -11,5 +11,6 @@ void free_crush_result(char **result);
 void change(char old, char new_s, char * text);
 void delete_simbol(char simbol, char * text);
 char ** crush(char s, char * text);
+void change(char old, char new_s, char * text);
 
 #endif
